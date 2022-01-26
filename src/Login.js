@@ -12,7 +12,7 @@ export default function Login() {
   }
 
   function onLoggedIn(json) {
-    console.log('LOGGED IN:', json.jwt)
+    console.log('LOGGED IN:', json.jwt);
     localStorage.setItem('jwt', json.jwt);
   }
 
@@ -21,24 +21,28 @@ export default function Login() {
       <h1>Login</h1>
       <form onSubmit={submitLogin}>
         <div>
-          Username:{' '}
+          <label htmlFor="username">Username:</label>
           <input
             type="text"
+            id="username"
             name="username"
             value={user.username}
             onChange={updateUserState}
           />
         </div>
         <div>
-          Password:{' '}
+          <label htmlFor="password">Password:</label>
           <input
             type="password"
+            id="password"
             name="password"
             value={user.password}
             onChange={updateUserState}
           />
         </div>
         <button type="submit">Login</button>
+        {/* {localStorage.getItem('jwt') ? ( */}
+        <button onClick={() => localStorage.setItem('jwt', '')}>Logout</button>
       </form>
     </div>
   );

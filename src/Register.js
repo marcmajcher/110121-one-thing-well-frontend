@@ -2,7 +2,7 @@ import useFetchApi from './lib/useFetchApi';
 import useUserState from './lib/useUserState';
 
 export default function Register() {
-  const [user, updateUserState, resetUser] = useUserState()
+  const [user, updateUserState, resetUser] = useUserState();
   const registerApi = useFetchApi('/users', onRegistered, 'POST');
 
   function onRegistered(data) {
@@ -11,7 +11,7 @@ export default function Register() {
 
   function submitRegistration(e) {
     e.preventDefault();
-    registerApi({user});
+    registerApi({ user });
     resetUser();
   }
 
@@ -20,27 +20,30 @@ export default function Register() {
       <h1>Create New User</h1>
       <form onSubmit={submitRegistration}>
         <div>
-          Username:{' '}
+          <label htmlFor="username">Username:</label>
           <input
             type="text"
+            id="username"
             name="username"
             value={user.username}
             onChange={updateUserState}
           />
         </div>
         <div>
-          Email:{' '}
+          <label htmlFor="email">Email:</label>
           <input
             type="text"
+            id="email"
             name="email"
             value={user.email}
             onChange={updateUserState}
           />
         </div>
         <div>
-          Password:{' '}
+          <label htmlFor="password">Password:</label>
           <input
             type="password"
+            id="password"
             name="password"
             value={user.password}
             onChange={updateUserState}

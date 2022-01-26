@@ -19,9 +19,17 @@ export default function Profile() {
         <button onClick={getProfile}>Get Profile</button>
       ) : (
         <>
-          <div>Username: {user.username}</div>
-          <div>Email: {user.email}</div>
-          <button onClick={resetUser}>Reset</button>
+          <div className="profile-item">
+            <div className="profile-label">Username: </div>
+            <div className="profile-value">{user.username}</div>
+          </div>
+          <div className="profile-item">
+            <div className="profile-label">Email: </div>
+            <div className="profile-value">{user.email}</div>
+          </div>
+          <button className="profile-button" onClick={resetUser}>
+            Reset
+          </button>
         </>
       )}
     </div>

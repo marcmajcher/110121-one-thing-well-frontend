@@ -4,13 +4,14 @@ import Profile from './Profile';
 import Register from './Register';
 
 function App() {
-
   return (
-    <div >
+    <div className="container">
       <Register />
+      <hr />
       <Login />
+      <hr />
       <Profile />
-      </div>
+    </div>
   );
 }
 
