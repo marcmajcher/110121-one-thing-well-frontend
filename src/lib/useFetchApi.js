@@ -1,7 +1,10 @@
 const API = 'http://localhost:3000/api/v1';
 
-export default function useFetchApi(route, callback, method) {
+export default function useFetchApi(route, callback, method = 'GET') {
   return (data = {}) => {
+    if (method === 'GET' || data.constructor.name === 'SyntheticBaseEvent') {
+      data = undefined;
+    }
     fetch(`${API}/${route}`, {
       method,
       headers: {

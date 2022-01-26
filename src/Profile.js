@@ -1,41 +1,27 @@
-import { useState } from 'react';
+import useFetchApi from './lib/useFetchApi';
+import useUserState from './lib/useUserState';
 
 export default function Profile() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const API = 'http://localhost:3000/api/v1';
+  const [user, , resetUser, setUser] = useUserState();
+  const getProfile = useFetchApi('/profile', onProfile);
 
-  function getProfile() {
-    fetch(`${API}/profile`, {
-      method: 'GET',
-      headers: {
-        Accepts: 'application/json',
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        console.log('got profile:', json);
-        setUsername(json.username);
-        setEmail(json.email);
-      });
-  }
-
-  function resetProfile() {
-    setUsername();
-    setEmail();
+  function onProfile(json) {
+    console.log('got profile:', json);
+    setUser({
+      username: json.username,
+      email: json.email,
+    });
   }
 
   return (
     <div>
-      {!username ? (
+      {!user.username ? (
         <button onClick={getProfile}>Get Profile</button>
       ) : (
         <>
-          <div>Username: {username}</div>
-          <div>Email: {email}</div>
-          <button onClick={resetProfile}>Reset</button>
+          <div>Username: {user.username}</div>
+          <div>Email: {user.email}</div>
+          <button onClick={resetUser}>Reset</button>
         </>
       )}
     </div>

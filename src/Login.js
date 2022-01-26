@@ -1,24 +1,19 @@
-import { useState } from 'react';
-import useFetchApi from './useFetchApi';
+import useFetchApi from './lib/useFetchApi';
+import useUserState from './lib/useUserState';
 
 export default function Login() {
-  const [user, setUser] = useState({});
+  const [user, updateUserState, resetUser] = useUserState();
   const loginApi = useFetchApi('/login', onLoggedIn, 'POST');
 
   function submitLogin(e) {
     e.preventDefault();
-    loginApi({ user });
-    setUser({});
+    loginApi({ user: { username: user.username, password: user.password } });
+    resetUser({});
   }
 
   function onLoggedIn(json) {
+    console.log('LOGGED IN:', json.jwt)
     localStorage.setItem('jwt', json.jwt);
-  }
-
-  function changeUserState(e) {
-    const key = e.target.name;
-    const value = e.target.value;
-    setUser({ ...user, [key]: value });
   }
 
   return (
@@ -31,7 +26,7 @@ export default function Login() {
             type="text"
             name="username"
             value={user.username}
-            onChange={changeUserState}
+            onChange={updateUserState}
           />
         </div>
         <div>
@@ -40,7 +35,7 @@ export default function Login() {
             type="password"
             name="password"
             value={user.password}
-            onChange={changeUserState}
+            onChange={updateUserState}
           />
         </div>
         <button type="submit">Login</button>

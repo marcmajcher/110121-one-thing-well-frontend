@@ -1,24 +1,18 @@
-import { useState } from 'react';
-import useFetchApi from './useFetchApi';
+import useFetchApi from './lib/useFetchApi';
+import useUserState from './lib/useUserState';
 
 export default function Register() {
-  const [user, setUser] = useState({});
+  const [user, updateUserState, resetUser] = useUserState()
   const registerApi = useFetchApi('/users', onRegistered, 'POST');
 
   function onRegistered(data) {
-    console.log('GOT', data);
+    console.log('REGISTERED', data);
   }
 
   function submitRegistration(e) {
     e.preventDefault();
     registerApi({user});
-    setUser({});
-  }
-
-  function changeUserState(e) {
-    const key = e.target.name;
-    const value = e.target.value;
-    setUser({ ...user, [key]: value });
+    resetUser();
   }
 
   return (
@@ -31,7 +25,7 @@ export default function Register() {
             type="text"
             name="username"
             value={user.username}
-            onChange={changeUserState}
+            onChange={updateUserState}
           />
         </div>
         <div>
@@ -40,7 +34,7 @@ export default function Register() {
             type="text"
             name="email"
             value={user.email}
-            onChange={changeUserState}
+            onChange={updateUserState}
           />
         </div>
         <div>
@@ -49,7 +43,7 @@ export default function Register() {
             type="password"
             name="password"
             value={user.password}
-            onChange={changeUserState}
+            onChange={updateUserState}
           />
         </div>
         <button type="submit">Register</button>
