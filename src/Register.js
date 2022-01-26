@@ -1,12 +1,15 @@
 import useFetchApi from './lib/useFetchApi';
+import { useNavigate } from 'react-router-dom';
 import useUserState from './lib/useUserState';
 
 export default function Register() {
+  const navigate = useNavigate();
   const [user, updateUserState, resetUser] = useUserState();
   const registerApi = useFetchApi('/users', onRegistered, 'POST');
 
   function onRegistered(data) {
     console.log('REGISTERED', data);
+    navigate('/login');
   }
 
   function submitRegistration(e) {

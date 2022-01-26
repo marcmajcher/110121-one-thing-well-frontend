@@ -1,9 +1,12 @@
+import { useEffect } from 'react';
 import useFetchApi from './lib/useFetchApi';
 import useUserState from './lib/useUserState';
 
 export default function Profile() {
   const [user, , resetUser, setUser] = useUserState();
   const getProfile = useFetchApi('/profile', onProfile);
+
+  useEffect(() => getProfile(), []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function onProfile(json) {
     console.log('got profile:', json);
